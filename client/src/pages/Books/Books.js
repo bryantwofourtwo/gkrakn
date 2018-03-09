@@ -57,9 +57,9 @@ class Books extends Component {
     return (
       <Container fluid>
         <Row>
-          <Col size="md-6">
+          <Col size="md-8 sm-8">
             <Jumbotron>
-              <h1>What Books Should I Read?</h1>
+              <h1>Trending Items</h1>
             </Jumbotron>
             <form>
               <Input
@@ -88,9 +88,9 @@ class Books extends Component {
               </FormBtn>
             </form>
           </Col>
-          <Col size="md-6 sm-12">
+          <Col size="md-4 sm-4">
             <Jumbotron>
-              <h1>Books On My List</h1>
+              <h1>Searched Items</h1>
             </Jumbotron>
             {this.state.books.length ? (
               <List>
