@@ -12,7 +12,7 @@ class Books extends Component {
     books: [],
     title: "",
     author: "",
-    synopsis: ""
+    ASIN: ""
   };
 
   componentDidMount() {
@@ -22,7 +22,7 @@ class Books extends Component {
   loadBooks = () => {
     API.getBooks()
       .then(res =>
-        this.setState({ books: res.data, title: "", author: "", synopsis: "" })
+        this.setState({ books: res.data, title: "", author: "", ASIN: "" })
       )
       .catch(err => console.log(err));
   };
@@ -46,7 +46,7 @@ class Books extends Component {
       API.saveBook({
         title: this.state.title,
         author: this.state.author,
-        synopsis: this.state.synopsis
+        synopsis: this.state.ASIN
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -75,10 +75,16 @@ class Books extends Component {
                 placeholder="Author (required)"
               />
               <Input
-                value={this.state.asin}
+                value={this.state.ASIN}
                 onChange={this.handleInputChange}
                 name="ASIN #"
                 placeholder="ASIN # (required)"
+              />
+              <Input
+                value={this.state.descrition}
+                onChange={this.handleInputChange}
+                name="description"
+                placeholder="Product Description (required)"
               />
               {/* <TextArea
                 value={this.state.synopsis}
@@ -96,7 +102,7 @@ class Books extends Component {
           </Col>
           <Col size="md-4 sm-4">
             <Jumbotron>
-              <h1>Searched Items</h1>
+              <h1>Searched</h1>
             </Jumbotron>
             {this.state.books.length ? (
               <List>
