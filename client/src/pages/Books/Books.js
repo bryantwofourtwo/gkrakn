@@ -59,7 +59,7 @@ class Books extends Component {
         <Row>
           <Col size="md-8 sm-8">
             <Jumbotron>
-              <h1>Trending Items</h1>
+              <h3>Search by author, title, ASIN # or product desription</h3>
             </Jumbotron>
             <form>
               <Input
