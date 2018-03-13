@@ -66,25 +66,25 @@ class Books extends Component {
                 value={this.state.title}
                 onChange={this.handleInputChange}
                 name="title"
-                placeholder="Title (required)"
+                placeholder="Title"
               />
               <Input
                 value={this.state.author}
                 onChange={this.handleInputChange}
                 name="author"
-                placeholder="Author (required)"
+                placeholder="Author"
               />
               <Input
                 value={this.state.ASIN}
                 onChange={this.handleInputChange}
                 name="ASIN #"
-                placeholder="ASIN # (required)"
+                placeholder="ASIN #"
               />
               <Input
                 value={this.state.descrition}
                 onChange={this.handleInputChange}
                 name="description"
-                placeholder="Product Description (required)"
+                placeholder="Product Description"
               />
               {/* <TextArea
                 value={this.state.synopsis}
