@@ -74,17 +74,23 @@ class Books extends Component {
                 name="author"
                 placeholder="Author (required)"
               />
-              <TextArea
+              <Input
+                value={this.state.asin}
+                onChange={this.handleInputChange}
+                name="ASIN #"
+                placeholder="ASIN # (required)"
+              />
+              {/* <TextArea
                 value={this.state.synopsis}
                 onChange={this.handleInputChange}
                 name="synopsis"
                 placeholder="Synopsis (Optional)"
-              />
+              /> */}
               <FormBtn
                 disabled={!(this.state.author && this.state.title)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Book
+                Submit Query
               </FormBtn>
             </form>
           </Col>
