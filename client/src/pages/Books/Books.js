@@ -102,7 +102,7 @@ class Books extends Component {
           </Col>
           <Col size="md-4 sm-4">
             <Jumbotron>
-              <h1>Searched</h1>
+              <h2>Tracking:</h2>
             </Jumbotron>
             {this.state.books.length ? (
               <List>
@@ -118,7 +118,7 @@ class Books extends Component {
                 ))}
               </List>
             ) : (
-              <h3>No Results to Display</h3>
+              <h4>Not tracking anything yet</h4>
             )}
           </Col>
         </Row>
