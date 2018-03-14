@@ -3,7 +3,7 @@ import axios from "axios";
 export default {
   // Gets all books
   getBooks: function(response) {
-    return axios.get("https://cors-anywhere.herokuapp.com/http://api.walmartlabs.com/v1/trends?format=json&apiKey=ksnm9gjdt5ubq6mxkdq2wash")
+    return axios.get("https://cors-anywhere.herokuapp.com/http://api.walmartlabs.com/v1/search?query=ipod&format=json&apiKey=ksnm9gjdt5ubq6mxkdq2wash")
   },
   // Gets the book with the given id
   getBook: function(id) {
