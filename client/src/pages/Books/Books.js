@@ -55,8 +55,15 @@ class Books extends Component {
     }
   };
 
-  
+      
   render() {
+    var btnClass;
+
+    if (this.state.bookSchema) {
+        btnClass = "btn btn-danger"
+    } else {
+        btnClass = "btn btn-primary";
+    }
     return (
       <Container fluid>
         <Row>
@@ -108,11 +115,12 @@ class Books extends Component {
                   <ListItem key={book.itemId}>
                     <Link to={"/books/" + book.itemId}>
                       <strong>
-                        <div className="card border-primary mb-3" style={{ maxWidth: 100}}>
+                        <div className="card border-primary mb-3" >
                           <img className="card-im-top" src={book.mediumImage} alt="Product"></img>
                             <div className="card-body">
                               <h4 className="card-title">${book.salePrice}</h4>
                               <p className="card-text">{book.name}</p>
+                              <button href="#" onClick={() => this.onButtonClicked()} className={btnClass}>{this.state.onWishList ? "Remove from Wishlist" : "Track Item"}</button>
                             </div>
                         </div>
                       </strong>
