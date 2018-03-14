@@ -21,9 +21,10 @@ class Books extends Component {
 
   loadBooks = () => {
     API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", ASIN: "" })
-      )
+      .then(res => {
+        console.log(res)
+        this.setState({ books: res.data.items, title: "", author: "", ASIN: "" })
+      })
       .catch(err => console.log(err));
   };
 
@@ -75,17 +76,17 @@ class Books extends Component {
                 placeholder="Author"
               />
               <Input
-                value={this.state.ASIN}
+                value={this.state.Item}
                 onChange={this.handleInputChange}
                 name="ASIN #"
                 placeholder="ASIN #"
               />
-              <Input
-                value={this.state.descrition}
+              {/* <Input
+                value={this.state.description}
                 onChange={this.handleInputChange}
                 name="description"
                 placeholder="Product Description"
-              />
+              /> */}
               {/* <TextArea
                 value={this.state.synopsis}
                 onChange={this.handleInputChange}
@@ -93,7 +94,7 @@ class Books extends Component {
                 placeholder="Synopsis (Optional)"
               /> */}
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                disabled={!(this.state.author && this.state.itemId)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Query
@@ -107,13 +108,16 @@ class Books extends Component {
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                  <ListItem key={book.itemId}>
+                    <Link to={"/books/" + book.itemId}>
                       <strong>
-                        {book.title} by {book.author}
+                        <img src={book.mediumImage}></img>
+                        <h4>${book.salePrice}</h4>
+                        <p>{book.name}</p>
+                        {/* <p>Item #: {book.itemId}</p> */}
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                    <DeleteBtn onClick={() => this.deleteBook(book.itemId)} />
                   </ListItem>
                 ))}
               </List>
