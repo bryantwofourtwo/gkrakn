@@ -2,8 +2,8 @@ import axios from "axios";
 
 export default {
   // Gets all books
-  getBooks: function() {
-    return axios.get("/api/items");
+  getBooks: function(response) {
+    return axios.get("https://cors-anywhere.herokuapp.com/http://api.walmartlabs.com/v1/search?query=ipod&format=json&apiKey=ksnm9gjdt5ubq6mxkdq2wash")
   },
   // Gets the book with the given id
   getBook: function(id) {
@@ -18,3 +18,13 @@ export default {
     return axios.post("/api/books", bookData);
   }
 };
+
+// import axios from "axios";
+// const BASEURL = "http://api.walmartlabs.com/v1/search?query=ipod&format=json&apiKey=";
+// const APIKEY = "ksnm9gjdt5ubq6mxkdq2wash";
+
+// export default {
+//   search: function(query) {
+//     return axios.get(BASEURL + APIKEY);
+//   }
+// };

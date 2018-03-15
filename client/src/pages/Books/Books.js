@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
+import "./Books.css";
 
 class Books extends Component {
   state = {
@@ -21,9 +22,10 @@ class Books extends Component {
 
   loadBooks = () => {
     API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, title: "", author: "", ASIN: "" })
-      )
+      .then(res => {
+        console.log(res)
+        this.setState({ books: res.data.items, title: "", author: "", ASIN: "" })
+      })
       .catch(err => console.log(err));
   };
 
@@ -53,7 +55,15 @@ class Books extends Component {
     }
   };
 
+      
   render() {
+    var btnClass;
+
+    if (this.state.bookSchema) {
+        btnClass = "btn btn-danger"
+    } else {
+        btnClass = "btn btn-primary";
+    }
     return (
       <Container fluid>
         <Row>
@@ -80,12 +90,12 @@ class Books extends Component {
                 name="ASIN #"
                 placeholder="ASIN #"
               />
-              <Input
-                value={this.state.descrition}
+              {/* <Input
+                value={this.state.description}
                 onChange={this.handleInputChange}
                 name="description"
                 placeholder="Product Description"
-              />
+              /> */}
               {/* <TextArea
                 value={this.state.synopsis}
                 onChange={this.handleInputChange}
@@ -93,12 +103,32 @@ class Books extends Component {
                 placeholder="Synopsis (Optional)"
               /> */}
               <FormBtn
-                disabled={!(this.state.author && this.state.title)}
+                disabled={!(this.state.author && this.state.itemId)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Query
               </FormBtn>
             </form>
+
+            <List>
+                {this.state.books.map(book => (
+                  <ListItem key={book.itemId}>
+                    <Link to={"/books/" + book.itemId}>
+                      <strong>
+                        <div className="card border-primary mb-3" >
+                          <img className="card-im-top" src={book.mediumImage} alt="Product"></img>
+                            <div className="card-body">
+                              <h4 className="card-title">${book.salePrice}</h4>
+                              <p className="card-text">{book.name}</p>
+                              <button href="#" onClick={() => this.onButtonClicked()} className={btnClass}>{this.state.onWishList ? "Remove from Wishlist" : "Track Item"}</button>
+                            </div>
+                        </div>
+                      </strong>
+                    </Link>
+                    <DeleteBtn onClick={() => this.deleteBook(book.itemId)} />
+                  </ListItem>
+                ))}
+              </List>
           </Col>
           <Col size="md-4 sm-4">
             <Jumbotron>
@@ -107,13 +137,16 @@ class Books extends Component {
             {this.state.books.length ? (
               <List>
                 {this.state.books.map(book => (
-                  <ListItem key={book._id}>
-                    <Link to={"/books/" + book._id}>
+                  <ListItem key={book.itemId}>
+                    <Link to={"/books/" + book.itemId}>
                       <strong>
-                        {book.title} by {book.author}
+                        <img src={book.mediumImage}></img>
+                        <h4>${book.salePrice}</h4>
+                        <p>{book.name}</p>
+                        {/* <p>Item #: {book.itemId}</p> */}
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book._id)} />
+                    <DeleteBtn onClick={() => this.deleteBook(book.itemId)} />
                   </ListItem>
                 ))}
               </List>

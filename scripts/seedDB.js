@@ -6,9 +6,9 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist",
-  {
-    useMongoClient: true
-  }
+  // {
+  //   // useMongoClient: true
+  // }
 );
 
 const bookSeed = [
