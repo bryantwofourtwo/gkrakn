@@ -10,6 +10,12 @@ import { Input, FormBtn } from "../../components/Form";
 class Books extends Component {
   state = {
     books: [],
+    tracked: [],
+    title: "",
+    author: "",
+    ASIN: "",
+    // search: ''
+
   };
 
   componentDidMount() {
@@ -56,8 +62,24 @@ class Books extends Component {
         .catch(err => console.log(err));
     }
   
+    addToTracked = event => {
+        console.log(event.target)
+        var image = event.target.img;
+        console.log(image);
 
+    var toTracked = {
+      image: event.target.img,
+      title: event.target.title,
+      price: event.target.sale
+    }
+    console.log("hello", toTracked)
+      API.addToTrackedList(toTracked) 
+      .then(res => (console.log(res)))
+
+    }
       
+
+
   render() {
     var btnClass;
 
@@ -71,7 +93,8 @@ class Books extends Component {
         <Row>
           <Col size="md-8 sm-8">
             <Jumbotron>
-              <h3>Search by author, title, or product desription</h3>
+              <h3>Search by Item or ASIN #</h3>
+
             </Jumbotron>
             <form>
               <Input
@@ -81,12 +104,13 @@ class Books extends Component {
                 placeholder="Title"
                 id="query"
               />
-              <Input
-                value={this.state.itemId}
+              {/* <Input
+                value={this.state.author}
+
                 onChange={this.handleInputChange}
                 name="author"
                 placeholder="Author"
-              />
+              /> */}
               <Input
                 value={this.state.msrp}
                 onChange={this.handleInputChange}
@@ -118,18 +142,20 @@ class Books extends Component {
             <List>
                 {this.state.books.map(book => (
                   <ListItem key={book.itemId}>
-                    <Link to={"/books/" + book.itemId}>
+                
                       <strong>
                         <div className="card border-primary mb-3" >
                           <img className="card-im-top" src={book.mediumImage} alt="Product"></img>
                             <div className="card-body">
                               <h4 className="card-title">${book.salePrice}</h4>
                               <p className="card-text">{book.name}</p>
-                              <button href="#" onClick={() => this.onButtonClicked()} className={btnClass}>{this.state.onWishList ? "Remove from Wishlist" : "Track Item"}</button>
+                              <button href="" img={book.mediumImage} title={book.name}
+                              sale={book.salePrice}
+                              onClick={this.addToTracked} className={btnClass}>Track Item</button>
                             </div>
                         </div>
                       </strong>
-                    </Link>
+                  
                     <DeleteBtn onClick={() => this.deleteBook(book.itemId)} />
                   </ListItem>
                 ))}
@@ -143,18 +169,18 @@ class Books extends Component {
             </Jumbotron>
             {this.state.books.length ? (
               <List>
-                {this.state.books.map(book => (
-                  <ListItem key={book.itemId}>
-                    <Link to={"/books/" + book.itemId}>
+                {this.state.tracked.map(trackedItem => (
+                  <ListItem key={trackedItem.itemId}>
+                    <Link to={"/trackedItems/" + trackedItem.itemId}>
                       <strong>
-                        <img src={book.mediumImage} alt={book.name}></img>
-                        <h4>${book.salePrice}</h4>
-                        <p>{book.name}</p>
-                        {/* <p>Item #: {book.itemId}</p> */}
+                        <img src={trackedItem.mediumImage} alt={trackedItem.name}></img>
+                        <h4>${trackedItem.salePrice}</h4>
+                        <p>{trackedItem.name}</p>
+                        {/* <p>Item #: {trackedItem.itemId}</p> */}
                         
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book.itemId)}>
+                    <DeleteBtn onClick={() => this.deletetrackedItem(trackedItem.itemId)}>
 
                     </DeleteBtn>
                   </ListItem>
