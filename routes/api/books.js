@@ -13,4 +13,6 @@ router
   .put(booksController.update)
   .delete(booksController.remove);
 
+  router.route('/toTracked')
+  .post(booksController.tracked);
 module.exports = router;

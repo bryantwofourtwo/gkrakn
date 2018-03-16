@@ -31,5 +31,10 @@ export default {
     return axios.get(CORS + BASEURL + query.title + APIKEY, {
       crossdomain: true
     });
+  }, 
+
+  addToTrackedList: function(query) {
+    console.log(query)
+    return axios.post('/toTracked', query)
   }
 };
