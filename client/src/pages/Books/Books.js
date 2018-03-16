@@ -134,7 +134,7 @@ class Books extends Component {
                 // disabled={!(this.state.author && this.state.itemId)}
                 onClick={this.handleFormSubmit}
 
-                Submit Query
+                >Submit Query
               </FormBtn>
             </form>
 
