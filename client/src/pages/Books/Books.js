@@ -15,6 +15,7 @@ class Books extends Component {
     author: "",
     ASIN: "",
     // search: ''
+
   };
 
   componentDidMount() {
@@ -23,9 +24,11 @@ class Books extends Component {
     // this.loadBooks(this.search);
   }
 
+
   loadBooks = query => {
         this.setState({ books: query.data.items })
         console.log(query)
+
   };
 
   deleteBook = id => {
@@ -47,11 +50,13 @@ class Books extends Component {
   handleFormSubmit = event => {
     
     event.preventDefault();
+
  
       API.search({
         title: this.state.title,
         // author: this.state.author,
         // synopsis: this.state.ASIN
+
       })
         .then(res => this.loadBooks(res))
         .catch(err => console.log(err));
@@ -89,10 +94,11 @@ class Books extends Component {
           <Col size="md-8 sm-8">
             <Jumbotron>
               <h3>Search by Item or ASIN #</h3>
+
             </Jumbotron>
             <form>
               <Input
-                value={this.state.title}
+                value={this.state.name}
                 onChange={this.handleInputChange}
                 name="title"
                 placeholder="Title"
@@ -100,15 +106,16 @@ class Books extends Component {
               />
               {/* <Input
                 value={this.state.author}
+
                 onChange={this.handleInputChange}
                 name="author"
                 placeholder="Author"
               /> */}
               <Input
-                value={this.state.ASIN}
+                value={this.state.msrp}
                 onChange={this.handleInputChange}
                 name="ASIN #"
-                placeholder="ASIN #"
+                placeholder="ASIN # (Optional)"
               />
               {/* <Input
                 value={this.state.description}
@@ -123,9 +130,10 @@ class Books extends Component {
                 placeholder="Synopsis (Optional)"
               /> */}
               <FormBtn
+
                 // disabled={!(this.state.author && this.state.itemId)}
                 onClick={this.handleFormSubmit}
-              >
+
                 Submit Query
               </FormBtn>
             </form>
