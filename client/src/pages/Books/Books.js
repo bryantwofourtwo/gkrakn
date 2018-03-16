@@ -11,9 +11,10 @@ import "./Books.css";
 class Books extends Component {
   state = {
     books: [],
-    title: "",
-    author: "",
-    ASIN: ""
+    itemId: "",
+    name: "",
+    msrp: "",
+    salePrice: ""
   };
 
   componentDidMount() {
@@ -24,7 +25,7 @@ class Books extends Component {
     API.getBooks()
       .then(res => {
         console.log(res)
-        this.setState({ books: res.data.items, title: "", author: "", ASIN: "" })
+        this.setState({ books: res.data.items, itemId: "", name: "", msrp: "", salePrice: "", date: "" })
       })
       .catch(err => console.log(err));
   };
@@ -44,11 +45,13 @@ class Books extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.title && this.state.author) {
+    if (this.state.itemId && this.state.name) {
       API.saveBook({
-        title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.ASIN
+        itemId: this.state.itemId,
+        name: this.state.name,
+        msrp: this.state.msrp,
+        salePrice: this.state.salePrice,
+        date: this.state.date
       })
         .then(res => this.loadBooks())
         .catch(err => console.log(err));
@@ -69,26 +72,26 @@ class Books extends Component {
         <Row>
           <Col size="md-8 sm-8">
             <Jumbotron>
-              <h3>Search by author, title, ASIN # or product desription</h3>
+              <h3>Search by author, title, or product desription</h3>
             </Jumbotron>
             <form>
               <Input
-                value={this.state.title}
+                value={this.state.name}
                 onChange={this.handleInputChange}
                 name="title"
                 placeholder="Title"
               />
               <Input
-                value={this.state.author}
+                value={this.state.itemId}
                 onChange={this.handleInputChange}
                 name="author"
                 placeholder="Author"
               />
               <Input
-                value={this.state.ASIN}
+                value={this.state.msrp}
                 onChange={this.handleInputChange}
                 name="ASIN #"
-                placeholder="ASIN #"
+                placeholder="ASIN # (Optional)"
               />
               {/* <Input
                 value={this.state.description}
@@ -103,8 +106,8 @@ class Books extends Component {
                 placeholder="Synopsis (Optional)"
               /> */}
               <FormBtn
-                disabled={!(this.state.author && this.state.itemId)}
-                onClick={this.handleFormSubmit}
+                // disabled={!(this.state.name && this.state.itemId)}
+                // onClick={this.handleFormSubmit}
               >
                 Submit Query
               </FormBtn>

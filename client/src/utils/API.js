@@ -1,10 +1,21 @@
 import axios from "axios";
 
+
+// router.get("/books", (req, res) => {
+//   axios
+//     .get("https://cors-anywhere.herokuapp.com/http://api.walmartlabs.com/v1/search?query=", { params: req.query }) + "&format=json&apiKey=ksnm9gjdt5ubq6mxkdq2wash"
+//     .then(({ data: { results } }) => res.json(results))
+//     .catch(err => res.status(422).json(err));
+// });
+
 export default {
-  // Gets all books
+  //Gets all books
   getBooks: function(response) {
     return axios.get("https://cors-anywhere.herokuapp.com/http://api.walmartlabs.com/v1/search?query=ipod&format=json&apiKey=ksnm9gjdt5ubq6mxkdq2wash")
   },
+  
+
+  
   // Gets the book with the given id
   getBook: function(id) {
     return axios.get("/api/books/" + id);
