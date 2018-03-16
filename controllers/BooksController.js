@@ -11,7 +11,7 @@ module.exports = {
   },
   findById: function(req, res) {
     db.Book
-      .findById(req.params.id)
+      .findById(req.params.itemId)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -23,13 +23,13 @@ module.exports = {
   },
   update: function(req, res) {
     db.Book
-      .findOneAndUpdate({ _id: req.params.id }, req.body)
+      .findOneAndUpdate({ _id: req.params.itemId }, req.body)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
     db.Book
-      .findById({ _id: req.params.id })
+      .findById({ _id: req.params.itemId })
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
