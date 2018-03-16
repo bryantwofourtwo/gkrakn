@@ -5,28 +5,26 @@ import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn } from "../../components/Form";
-import "./Books.css";
+import { Input, FormBtn } from "../../components/Form";
 
 class Books extends Component {
   state = {
     books: [],
     title: "",
     author: "",
-    ASIN: ""
+    ASIN: "",
+    // search: ''
   };
 
   componentDidMount() {
-    this.loadBooks();
+    
+
+    // this.loadBooks(this.search);
   }
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res => {
-        console.log(res)
-        this.setState({ books: res.data.items, title: "", author: "", ASIN: "" })
-      })
-      .catch(err => console.log(err));
+  loadBooks = query => {
+        this.setState({ books: query.data.items })
+        console.log(query)
   };
 
   deleteBook = id => {
@@ -36,24 +34,28 @@ class Books extends Component {
   };
 
   handleInputChange = event => {
-    const { name, value } = event.target;
+    const value = event.target.value;
+    const name = event.target.name;
+    console.log(event.target.value)
+    // { name, value } = event.target;
     this.setState({
-      [name]: value
+     [name]: event.target.value
     });
   };
 
   handleFormSubmit = event => {
+    
     event.preventDefault();
-    if (this.state.title && this.state.author) {
-      API.saveBook({
+ 
+      API.search({
         title: this.state.title,
-        author: this.state.author,
-        synopsis: this.state.ASIN
+        // author: this.state.author,
+        // synopsis: this.state.ASIN
       })
-        .then(res => this.loadBooks())
+        .then(res => this.loadBooks(res))
         .catch(err => console.log(err));
     }
-  };
+  
 
       
   render() {
@@ -77,6 +79,7 @@ class Books extends Component {
                 onChange={this.handleInputChange}
                 name="title"
                 placeholder="Title"
+                id="query"
               />
               <Input
                 value={this.state.author}
@@ -103,13 +106,14 @@ class Books extends Component {
                 placeholder="Synopsis (Optional)"
               /> */}
               <FormBtn
-                disabled={!(this.state.author && this.state.itemId)}
+                // disabled={!(this.state.author && this.state.itemId)}
                 onClick={this.handleFormSubmit}
               >
                 Submit Query
               </FormBtn>
             </form>
 
+          
             <List>
                 {this.state.books.map(book => (
                   <ListItem key={book.itemId}>
@@ -129,7 +133,9 @@ class Books extends Component {
                   </ListItem>
                 ))}
               </List>
+              
           </Col>
+          
           <Col size="md-4 sm-4">
             <Jumbotron>
               <h2>Tracking:</h2>
@@ -140,13 +146,16 @@ class Books extends Component {
                   <ListItem key={book.itemId}>
                     <Link to={"/books/" + book.itemId}>
                       <strong>
-                        <img src={book.mediumImage}></img>
+                        <img src={book.mediumImage} alt={book.name}></img>
                         <h4>${book.salePrice}</h4>
                         <p>{book.name}</p>
                         {/* <p>Item #: {book.itemId}</p> */}
+                        
                       </strong>
                     </Link>
-                    <DeleteBtn onClick={() => this.deleteBook(book.itemId)} />
+                    <DeleteBtn onClick={() => this.deleteBook(book.itemId)}>
+
+                    </DeleteBtn>
                   </ListItem>
                 ))}
               </List>
