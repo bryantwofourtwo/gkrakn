@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, FormBtn } from "../../components/Form";
+import "./Books.css";
 
 class Books extends Component {
   state = {
@@ -129,6 +130,8 @@ class Books extends Component {
                 name="synopsis"
                 placeholder="Synopsis (Optional)"
               /> */}
+              <Row>
+              
               <FormBtn
 
                 // disabled={!(this.state.author && this.state.itemId)}
@@ -136,15 +139,16 @@ class Books extends Component {
 
                 >Submit Query
               </FormBtn>
+              </Row>
+              
             </form>
-
           
             <List>
                 {this.state.books.map(book => (
                   <ListItem key={book.itemId}>
                 
                       <strong>
-                        <div className="card border-primary mb-3" >
+                        <div className="card border-primary mb-3" id="rescon">
                           <img className="card-im-top" src={book.mediumImage} alt="Product"></img>
                             <div className="card-body">
                               <h4 className="card-title">${book.salePrice}</h4>
